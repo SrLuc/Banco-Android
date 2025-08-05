@@ -2,9 +2,11 @@ package br.ufpe.cin.banco.conta;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -12,17 +14,36 @@ import java.util.List;
 @Dao
 public interface ContaDAO {
 
+    //Adiciona uma nova conta
     @Insert(entity = Conta.class, onConflict = OnConflictStrategy.REPLACE)
     void adicionar(Conta c);
 
-    //TODO incluir métodos para atualizar conta e remover conta
+    //Atualiza uma Conta
+    @Update
+    void atualizar(Conta c);
 
+    // Deleta uma conta
+    @Delete
+    void remover(Conta c);
+
+    // Busca todas as contas (LiveData)
     @Query("SELECT * FROM contas ORDER BY numero ASC")
     LiveData<List<Conta>> contas();
 
+    //Lista todas as contas
     @Query("SELECT * FROM contas ORDER BY numero ASC")
     List<Conta> todasContas();
 
-    //TODO incluir métodos para buscar pelo (1) número da conta, (2) pelo nome e (3) pelo CPF do Cliente
+    // Busca pelo número da conta (chave primária)
+    @Query("SELECT * FROM contas WHERE numero = :numeroConta LIMIT 1")
+    Conta buscarPorNumero(String numeroConta);
+
+    //Busca por nome do cliente
+    @Query("SELECT * FROM contas WHERE nomeCliente LIKE '%' || :nomeCliente || '%' ")
+    List<Conta> buscarPorNome(String nomeCliente);
+
+    @Query("SELECT * FROM contas WHERE cpfCliente LIKE '%' || :cpfCliente || '%'")
+    List<Conta> buscarPorCPF(String cpfCliente);
+
 
 }

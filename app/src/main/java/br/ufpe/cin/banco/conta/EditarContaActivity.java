@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,7 +45,16 @@ public class EditarContaActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         String numeroConta = i.getStringExtra(KEY_NUMERO_CONTA);
-        //TODO usar o número da conta passado via Intent para recuperar informações da conta
+        viewModel.buscarPeloNumero(numeroConta);
+
+        viewModel.contaAtual.observe(this, conta -> {
+            if (conta != null){
+                campoNome.setText(conta.nomeCliente);
+                campoNumero.setText(conta.numero);
+                campoCPF.setText(conta.cpfCliente);
+                campoSaldo.setText(String.valueOf(conta.saldo));
+            }
+        });
 
         btnAtualizar.setText("Editar");
         btnAtualizar.setOnClickListener(
@@ -54,11 +64,45 @@ public class EditarContaActivity extends AppCompatActivity {
                     String saldoConta = campoSaldo.getText().toString();
                     //TODO: Incluir validações aqui, antes de criar um objeto Conta. Se todas as validações passarem, aí sim monta um objeto Conta.
                     //TODO: chamar o método que vai atualizar a conta no Banco de Dados
+
+                    if(nomeCliente.isEmpty() || nomeCliente.length() <5){
+                        campoNome.setError("Nome deve ter pelo menos 5 caracteres");
+                        campoNome.requestFocus();
+                        return;
+                    }
+
+                    if(cpfCliente.isEmpty()){
+                        campoCPF.setError("CPF é obrigatório!");
+                        campoCPF.requestFocus();
+                        return;
+                    }
+
+                    double saldo;
+                    try {
+                        saldo = Double.parseDouble(saldoConta);
+                    }catch (NumberFormatException e){
+                        campoSaldo.setError("Saldo INVÁLIDO");
+                        campoSaldo.requestFocus();
+                        return;
+                    }
+
+                    Conta contaAtualizada = new Conta(numeroConta, saldo, nomeCliente, cpfCliente);
+                    viewModel.atualizar(contaAtualizada);
+
+                    finish();
+
+
+
                 }
         );
 
         btnRemover.setOnClickListener(v -> {
-            //TODO implementar remoção da conta
+            Conta contaAtual = viewModel.contaAtual.getValue();
+            if (contaAtual != null) {
+                viewModel.remover(contaAtual);
+                Toast.makeText(this, "Conta removida com sucesso", Toast.LENGTH_SHORT).show();
+                finish();
+            }
         });
     }
 }

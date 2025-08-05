@@ -50,8 +50,49 @@ public class AdicionarContaActivity extends AppCompatActivity {
                     String numeroConta = campoNumero.getText().toString();
                     String saldoConta = campoSaldo.getText().toString();
                     //TODO: Incluir validações aqui, antes de criar um objeto Conta (por exemplo, verificar que digitou um nome com pelo menos 5 caracteres, que o campo de saldo tem de fato um número, assim por diante). Se todas as validações passarem, aí sim cria a Conta conforme linha abaixo.
-                    Conta c = new Conta(numeroConta, Double.valueOf(saldoConta), nomeCliente, cpfCliente);
+
+                    if (nomeCliente.isEmpty() || nomeCliente.length() < 5) {
+                        campoNome.setError("Nome deve ter pelo menos 5 caracteres");
+                        campoNome.requestFocus();
+                        return;
+                    }
+
+                    if (cpfCliente.isEmpty()) {
+                        campoCPF.setError("CPF é obrigatório");
+                        campoCPF.requestFocus();
+                        return;
+                    }
+
+                    if (numeroConta.isEmpty()) {
+                        campoNumero.setError("Número da conta é obrigatório");
+                        campoNumero.requestFocus();
+                        return;
+                    }
+
+                    if (saldoConta.isEmpty()) {
+                        campoSaldo.setError("Saldo é obrigatório");
+                        campoSaldo.requestFocus();
+                        return;
+                    }
+
+                    double saldo;
+                    try {
+                        saldo = Double.parseDouble(saldoConta);
+                    } catch (NumberFormatException e) {
+                        campoSaldo.setError("Saldo inválido");
+                        campoSaldo.requestFocus();
+                        return;
+                    }
+
+
+                    Conta c = new Conta(numeroConta, saldo, nomeCliente, cpfCliente);
                     //TODO: chamar o método que vai salvar a conta no Banco de Dados
+                    //DONE
+                    viewModel.inserir(c);
+
+                    // Fecha a Activity
+                    finish();
+
                 }
         );
 

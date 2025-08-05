@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 
 import br.ufpe.cin.banco.BancoDB;
+import br.ufpe.cin.banco.TransferirActivity;
 
 //Ver métodos anotados com TODO
 public class ContaViewModel extends AndroidViewModel {
@@ -25,19 +26,22 @@ public class ContaViewModel extends AndroidViewModel {
         this.contas = repository.getContas();
     }
 
-    void inserir(Conta c) {
+    public void inserir(Conta c) {
         new Thread(() -> repository.inserir(c)).start();
     }
 
     void atualizar(Conta c) {
-        //TODO implementar
+        new Thread(() -> repository.atualizar(c)).start();
     }
 
     void remover(Conta c) {
-        //TODO implementar
+        new Thread(() -> repository.remover(c)).start();
     }
 
     void buscarPeloNumero(String numeroConta) {
-        //TODO implementar
+        new Thread(() -> {
+            Conta conta = repository.buscarPeloNumero(numeroConta);
+            _contaAtual.postValue(conta);
+        }).start();
     }
 }
