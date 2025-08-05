@@ -6,6 +6,9 @@ Este projeto é um aplicativo Android para gerenciamento de contas bancárias, u
 
 ---
 
+### Link para visualização UML do Projeto
+- https://www.mermaidchart.com/app/projects/fb6400e6-ceb3-4048-9378-2024de20a1f3/diagrams/b22b5a86-1050-41c6-b027-3430ffd6e190/version/v0.1/edit
+
 ## Estrutura do Projeto
 
 ### 1. Camada de Apresentação (UI)
