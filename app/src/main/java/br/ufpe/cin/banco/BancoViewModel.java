@@ -7,11 +7,16 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import br.ufpe.cin.banco.conta.Conta;
 import br.ufpe.cin.banco.conta.ContaRepository;
 import android.util.Log;
+
+import br.ufpe.cin.banco.transacoes.Transacao;
 import br.ufpe.cin.banco.transacoes.TransacaoRepository;
 
 //Ver anotações TODO no código
@@ -31,7 +36,6 @@ public class BancoViewModel extends AndroidViewModel {
     }
 
     void transferir(String numeroContaOrigem, String numeroContaDestino, double valor) {
-        //TODO implementar transferência entre contas (lembrar de salvar no BD os objetos Conta modificados)
         new Thread(() -> {
             Conta origem = contaRepository.buscarPeloNumero(numeroContaOrigem);
             Conta destino = contaRepository.buscarPeloNumero(numeroContaDestino);
@@ -43,35 +47,55 @@ public class BancoViewModel extends AndroidViewModel {
                 contaRepository.atualizar(origem);
                 contaRepository.atualizar(destino);
 
-                Log.d("BancoViewModel", "Transferência feita: " + valor + " de " + numeroContaOrigem + " para " + numeroContaDestino);
+                String dataAtual = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
+                // Transação de débito (origem)
+                Transacao tDebito = new Transacao(0, 'D', numeroContaOrigem, valor, dataAtual);
+                transacaoRepository.inserir(tDebito);
+
+                // Transação de crédito (destino)
+                Transacao tCredito = new Transacao(0, 'C', numeroContaDestino, valor, dataAtual);
+                transacaoRepository.inserir(tCredito);
+
+                Log.d("BancoViewModel", "Transferência registrada com transações");
             }
         }).start();
     }
 
+
     void creditar(String numeroConta, double valor) {
-        //TODO implementar creditar em conta (lembrar de salvar no BD o objeto Conta modificado)
         new Thread(() -> {
             Conta conta = contaRepository.buscarPeloNumero(numeroConta);
             if (conta != null) {
                 conta.creditar(valor);
                 contaRepository.atualizar(conta);
-                Log.d("BancoViewModel", "Crédito feito: " + valor + " na conta " + numeroConta);
+
+                String dataAtual = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                Transacao t = new Transacao(0, 'C', numeroConta, valor, dataAtual);
+                transacaoRepository.inserir(t);
+
+                Log.d("BancoViewModel", "Crédito registrado na transação");
             }
         }).start();
     }
 
+
     void debitar(String numeroConta, double valor) {
-        //TODO implementar debitar em conta (lembrar de salvar no BD o objeto Conta modificado)
         new Thread(() -> {
             Conta conta = contaRepository.buscarPeloNumero(numeroConta);
             if (conta != null && conta.saldo >= valor) {
                 conta.debitar(valor);
                 contaRepository.atualizar(conta);
-                Log.d("BancoViewModel", "Débito feito: " + valor + " na conta " + numeroConta);
+
+                String dataAtual = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                Transacao t = new Transacao(0, 'D', numeroConta, valor, dataAtual);
+                transacaoRepository.inserir(t);
+
+                Log.d("BancoViewModel", "Débito registrado na transação");
             }
         }).start();
     }
+
 
     void buscarContasPeloNome(String nomeCliente) {
         //TODO implementar busca pelo nome do Cliente

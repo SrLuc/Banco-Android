@@ -32,17 +32,25 @@ public class TransacaoViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bindTo(Transacao t) {
-        this.valorTransacao.setText(String.valueOf(t.valorTransacao));
-        //TODO trocar a cor do texto com o valor da transação se for débito para vermelho
+        NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance();
+        String valorFormatado = formatoMoeda.format(t.valorTransacao);
 
         if(t.tipoTransacao == 'D'){
-            valorTransacao.setTextColor(Color.RED);
-        }else {
-            valorTransacao.setTextColor(Color.BLUE);
+            valorTransacao.setText("-" + valorFormatado);
+            valorTransacao.setTextColor(context.getResources().getColor(R.color.debito));
+        }
+        else if (t.tipoTransacao == 'C') {
+            valorTransacao.setText("+" + valorFormatado);
+            valorTransacao.setTextColor(context.getResources().getColor(R.color.credito));
+        }
+        else {
+            valorTransacao.setText(valorFormatado);
+            valorTransacao.setTextColor(context.getResources().getColor(R.color.transacao_padrao));
         }
 
         this.numeroConta.setText(t.numeroConta);
         this.dataTransacao.setText(t.dataTransacao.toString());
-
     }
+
+
 }

@@ -43,4 +43,7 @@ public class ContaAdapter extends ListAdapter<Conta, ContaViewHolder> {
                             oldItem.saldo == newItem.saldo;
                 }
             };
+
+
+
 }

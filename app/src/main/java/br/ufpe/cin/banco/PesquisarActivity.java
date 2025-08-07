@@ -33,18 +33,46 @@ public class PesquisarActivity extends AppCompatActivity {
         });
 
         viewModel = new ViewModelProvider(this).get(BancoViewModel.class);
+
         EditText aPesquisar = findViewById(R.id.pesquisa);
         Button btnPesquisar = findViewById(R.id.btn_Pesquisar);
         RadioGroup tipoPesquisa = findViewById(R.id.tipoPesquisa);
         RecyclerView rvResultado = findViewById(R.id.rvResultado);
+
+
         adapter = new ContaAdapter(getLayoutInflater());
         rvResultado.setLayoutManager(new LinearLayoutManager(this));
         rvResultado.setAdapter(adapter);
 
+        viewModel.contasFiltradas.observe(this, contas -> {
+            adapter.submitList(contas);
+        });
+
+        viewModel.contaAtual.observe(this, conta -> {
+            if (conta != null){
+                adapter.submitList(java.util.Collections.singletonList(conta));
+            }else {
+                adapter.submitList(java.util.Collections.emptyList());
+            }
+        });
+
         btnPesquisar.setOnClickListener(
                 v -> {
-                    String oQueFoiDigitado = aPesquisar.getText().toString();
-                    //TODO implementar a busca de acordo com o tipo de busca escolhido pelo usuário
+                    String oQueFoiDigitado = aPesquisar.getText().toString().trim();
+
+                    if (oQueFoiDigitado.isEmpty()){
+                        return;
+                    }
+
+                    int selectedId = tipoPesquisa.getCheckedRadioButtonId();
+
+                    if (selectedId == R.id.peloNomeCliente) {
+                        viewModel.buscarContasPeloNome(oQueFoiDigitado);
+                    } else if (selectedId == R.id.peloCPFcliente) {
+                        viewModel.buscarContasPeloCPF(oQueFoiDigitado);
+                    } else if (selectedId == R.id.peloNumeroConta) {
+                        viewModel.buscarContaPeloNumero(oQueFoiDigitado);
+                    }
                 }
         );
 
@@ -52,4 +80,4 @@ public class PesquisarActivity extends AppCompatActivity {
 
 
     }
-}
+};

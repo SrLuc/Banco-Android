@@ -29,7 +29,6 @@ public class TransacaoViewModel extends AndroidViewModel {
     public void inserir(Transacao t) {
         new Thread(() -> repository.inserir(t)).start();
     }
-    //TODO implementar métodos de busca de transações
 
     public LiveData<List<Transacao>> getTransacoes(){
         return transacoes;
