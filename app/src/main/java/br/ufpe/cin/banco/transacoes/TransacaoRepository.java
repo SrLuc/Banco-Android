@@ -24,5 +24,24 @@ public class TransacaoRepository {
         dao.adicionar(t);
     }
 
-    //TODO implementar métodos de busca de transações
+    public LiveData<List<Transacao>> buscarPorTipo(char tipo) {
+        return dao.buscarPorTipo(tipo);
+    }
+    public LiveData<List<Transacao>> buscarPorConta(String numeroConta){
+        return dao.buscarPorConta(numeroConta);
+    }
+    public LiveData<List<Transacao>> buscarPorData(String data){
+        return dao.buscarPorData(data);
+    }
+
+    public LiveData<List<Transacao>> buscarPorDataETipo(String data, char tipo) {
+        return dao.buscarPorDataETipo(data, tipo);
+    }
+
+    public LiveData<List<Transacao>> buscarPorContaETipo(String conta, char tipo){
+        return dao.buscarPorContaETipo(conta, tipo);
+    }
+
+
+
 }

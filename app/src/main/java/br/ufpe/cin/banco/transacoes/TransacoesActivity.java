@@ -10,9 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 import br.ufpe.cin.banco.BancoViewModel;
 import br.ufpe.cin.banco.R;
@@ -20,7 +23,7 @@ import br.ufpe.cin.banco.R;
 //Ver anotações TODO no código
 public class TransacoesActivity extends AppCompatActivity {
     BancoViewModel bancoViewModel;
-    TransacaoViewModel transacaoViewModel;
+    public TransacaoViewModel transacaoViewModel;
     TransacaoAdapter adapter;
 
     @Override
@@ -48,13 +51,51 @@ public class TransacoesActivity extends AppCompatActivity {
 
         btnPesquisar.setOnClickListener(
                 v -> {
-                    String oQueFoiDigitado = aPesquisar.getText().toString();
+                    String oQueFoiDigitado = aPesquisar.getText().toString().trim();
                     //TODO implementar o filtro de transações com o tipo de busca escolhido pelo usuário
+
+                    if (oQueFoiDigitado.isEmpty()) {
+                        transacaoViewModel.getTransacoes().observe(this, transacaos -> adapter.submitList(transacaos));
+                        return;
+                    }
+
+
+                    char tipoFiltro = 'T';
+                    int idRadioTipo = tipoTransacao.getCheckedRadioButtonId();
+                    if (idRadioTipo == R.id.peloTipoCredito) {
+                        tipoFiltro = 'C';
+                    } else if (idRadioTipo == R.id.peloTipoDebito) {
+                        tipoFiltro = 'D';
+                    }
+
+                    int idRadioPesquisa = tipoPesquisa.getCheckedRadioButtonId();
+
+                    LiveData<List<Transacao>> resultados;
+
+                    if (idRadioPesquisa == R.id.pelaData) {
+                        if (tipoFiltro == 'T') {
+                            resultados = transacaoViewModel.buscarPorData(oQueFoiDigitado);
+                        } else {
+                            resultados = transacaoViewModel.buscarPorDataETipo(oQueFoiDigitado, tipoFiltro);
+                        }
+                    } else if (idRadioPesquisa == R.id.peloNumeroConta) {
+                        if (tipoFiltro == 'T') {
+                            resultados = transacaoViewModel.buscarPorConta(oQueFoiDigitado);
+                        } else {
+                            resultados = transacaoViewModel.buscarPorContaETipo(oQueFoiDigitado, tipoFiltro);
+                        }
+                    } else {
+                        resultados = transacaoViewModel.getTransacoes();
+                    }
+
+                    resultados.observe(this, transacaos -> adapter.submitList(transacaos));
                 }
+
         );
 
         //TODO atualizar o RecyclerView com resultados da busca na medida que encontrar
-        // inicialmente deve exibir a lista de todas as transações
-
+        transacaoViewModel.transacoes.observe(this, transacoes -> {
+            adapter.submitList(transacoes);
+        });
     }
 }

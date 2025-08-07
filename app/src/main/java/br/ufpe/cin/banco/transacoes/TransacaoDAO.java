@@ -21,4 +21,21 @@ public interface TransacaoDAO {
 
     //TODO incluir métodos para buscar transações pelo (1) número da conta, (2) pela data, filtrando pelo tipo da transação (crédito, débito, ou todas)
 
+    @Query("SELECT * FROM transacoes WHERE tipoTransacao = :tipo")
+    LiveData<List<Transacao>> buscarPorTipo(char tipo);
+
+    @Query("SELECT * FROM transacoes WHERE numeroConta LIKE :conta")
+    LiveData<List<Transacao>> buscarPorConta(String conta);
+
+    @Query("SELECT * FROM transacoes WHERE dataTransacao = :data")
+    LiveData<List<Transacao>> buscarPorData(String data);
+
+    @Query("SELECT * FROM transacoes WHERE dataTransacao = :data AND tipoTransacao = :tipo")
+    LiveData<List<Transacao>> buscarPorDataETipo(String data, char tipo);
+
+    @Query("SELECT * FROM transacoes WHERE numeroConta LIKE :conta AND tipoTransacao = :tipo")
+    LiveData<List<Transacao>> buscarPorContaETipo(String conta, char tipo);
+
+
+
 }

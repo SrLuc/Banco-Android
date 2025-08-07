@@ -10,15 +10,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import br.ufpe.cin.banco.cliente.ClientesActivity;
+import br.ufpe.cin.banco.conta.ContaViewModel;
 import br.ufpe.cin.banco.conta.ContasActivity;
 import br.ufpe.cin.banco.transacoes.TransacoesActivity;
 
 //Ver anotações TODO no código
 public class MainActivity extends AppCompatActivity {
     BancoViewModel viewModel;
+    ContaViewModel contaViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         viewModel = new ViewModelProvider(this).get(BancoViewModel.class);
+
 
         Button contas = findViewById(R.id.btnContas);
         Button clientes = findViewById(R.id.btnClientes);
@@ -41,6 +46,18 @@ public class MainActivity extends AppCompatActivity {
         Button transacoes = findViewById(R.id.btnTransacoes);
 
         TextView totalBanco = findViewById(R.id.totalDinheiroBanco);
+
+        viewModel.getSaldo().observe(this, saldo -> {
+            if (saldo != null){
+                totalBanco.setText("R$ " + String.format("%.2f", saldo));
+            } else {
+                totalBanco.setText("R$ 0.00");
+            }
+        });
+
+
+
+
 
         //Remover a linha abaixo se for implementar a parte de Clientes
         clientes.setEnabled(false);

@@ -49,4 +49,9 @@ public class ContaRepository {
     public Conta buscarPeloNumero(String numeroConta) {
         return dao.buscarPorNumero(numeroConta);
     }
+
+    @WorkerThread
+    public LiveData<Double> getSaldoTotal(){
+        return dao.saldoTotal();
+    }
 }

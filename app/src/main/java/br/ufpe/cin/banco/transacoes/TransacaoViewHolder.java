@@ -2,6 +2,7 @@ package br.ufpe.cin.banco.transacoes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +34,12 @@ public class TransacaoViewHolder extends RecyclerView.ViewHolder {
     void bindTo(Transacao t) {
         this.valorTransacao.setText(String.valueOf(t.valorTransacao));
         //TODO trocar a cor do texto com o valor da transação se for débito para vermelho
+
+        if(t.tipoTransacao == 'D'){
+            valorTransacao.setTextColor(Color.RED);
+        }else {
+            valorTransacao.setTextColor(Color.BLUE);
+        }
 
         this.numeroConta.setText(t.numeroConta);
         this.dataTransacao.setText(t.dataTransacao.toString());

@@ -1,5 +1,6 @@
 package br.ufpe.cin.banco;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.time.LocalDate;
+
+import br.ufpe.cin.banco.transacoes.Transacao;
 import br.ufpe.cin.banco.transacoes.TransacaoViewModel;
 
 //Ver anotações TODO no código
@@ -46,16 +50,40 @@ public class CreditarActivity extends AppCompatActivity {
         tipoOperacao.setText("CREDITAR");
         btnOperacao.setText("Creditar");
 
-        btnOperacao.setOnClickListener(
-                v -> {
-                    String numOrigem = numeroContaOrigem.getText().toString();
-                    //TODO lembrar de implementar validação do número da conta e do valor da operação, antes de efetuar a operação de crédito.
-                    // O método abaixo está sendo chamado, mas precisa ser implementado na classe BancoViewModel para funcionar.
-                    // Tem que salvar a transação no Banco de Dados também, criando um objeto Transacao que será salvo na tabela transacoes por meio de TransacaoViewModel
-                    double valor = Double.valueOf(valorOperacao.getText().toString());
-                    viewModel.creditar(numOrigem,valor);
-                    finish();
+        btnOperacao.setOnClickListener(v -> {
+            String numOrigem = numeroContaOrigem.getText().toString().trim();
+            String valorStr = valorOperacao.getText().toString().trim();
+
+            if (numOrigem.isEmpty() || valorStr.isEmpty()) {
+                tipoOperacao.setText("Preencha todos os campos!");
+                return;
+            }
+
+            double valor;
+            try {
+                valor = Double.parseDouble(valorStr);
+                if (valor <= 0) {
+                    tipoOperacao.setText("Valor deve ser positivo!");
+                    return;
                 }
-        );
+            } catch (NumberFormatException e) {
+                tipoOperacao.setText("Valor inválido!");
+                return;
+            }
+
+            // Crédito na conta
+            viewModel.creditar(numOrigem, valor);
+
+            // Criar e salvar a transação
+            String dataAgora = null; // ou use um formatador
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                dataAgora = LocalDate.now().toString();
+            }
+            Transacao t = new Transacao(0, 'C', numOrigem, valor, dataAgora);
+            transacaoViewModel.inserir(t);
+
+            finish();
+        });
+
     }
 }

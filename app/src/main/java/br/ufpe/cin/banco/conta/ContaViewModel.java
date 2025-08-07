@@ -44,4 +44,8 @@ public class ContaViewModel extends AndroidViewModel {
             _contaAtual.postValue(conta);
         }).start();
     }
+
+    public LiveData<Double> getSaldoTotal(){
+        return repository.getSaldoTotal();
+    }
 }
