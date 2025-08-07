@@ -1,56 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main"
-    android:padding="7dp"
-    android:orientation="vertical">
+    android:padding="8dp"
+    android:orientation="vertical"
+    android:background="#ECECEC">
 
     <EditText
         android:id="@+id/pesquisa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:hint="Digite algum termo para pesquisar" />
+        android:layout_margin="6dp"
+        android:hint="Digite algum termo para pesquisar"
+        android:fontFamily="sans-serif-light"
+        android:textSize="18sp"
+        android:backgroundTint="#8B0000"
+        android:textColor="#111111"
+        android:minHeight="48dp" />
+
+    <RadioButton
+        android:id="@+id/peloNumeroConta"
+        android:layout_width="382dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Número da Conta"
+        android:textColor="#8B0000"
+        android:textSize="20sp" />
 
     <RadioGroup
+        android:id="@+id/tipoPesquisa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tipoPesquisa"
-        android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:layout_margin="3dp"
-                android:id="@+id/peloNomeCliente"
-                android:text="Nome" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:id="@+id/peloCPFcliente"
-                android:text="CPF" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:id="@+id/peloNumeroConta"
-                android:text="Número da Conta" />
-    </RadioGroup>
+        android:orientation="horizontal"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="">
 
+        <RadioButton
+            android:id="@+id/peloNomeCliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:layout_margin="6dp"
+            android:text="Nome"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#8B0000" />
+
+        <RadioButton
+            android:id="@+id/peloCPFcliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="CPF"
+            android:textColor="#8B0000"
+            android:textSize="20sp" />
+
+    </RadioGroup>
 
     <Button
         android:id="@+id/btn_Pesquisar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Pesquisar" />
+        android:layout_margin="6dp"
+        android:text="Pesquisar"
+        android:textSize="24sp"
+        android:backgroundTint="#B22222"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-medium" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvResultado"
-        android:layout_margin="3dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_margin="6dp" />
 
 </LinearLayout>

@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main"
-    android:padding="7dp"
-    android:orientation="vertical">
+    android:padding="8dp"
+    android:orientation="vertical"
+    android:background="#ECECEC">
 
     <Button
         android:id="@+id/btn_Adiciona"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Adicionar Cliente" />
+        android:text="Adicionar Cliente"
+        android:layout_margin="6dp"
+        android:textSize="24sp"
+        android:backgroundTint="#B22222"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-medium" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvClientes"
-        android:layout_margin="3dp"
+        android:layout_margin="6dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
