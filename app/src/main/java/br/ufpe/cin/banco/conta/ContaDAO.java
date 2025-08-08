@@ -42,9 +42,11 @@ public interface ContaDAO {
     @Query("SELECT * FROM contas WHERE nomeCliente LIKE '%' || :nomeCliente || '%' ")
     List<Conta> buscarPorNome(String nomeCliente);
 
+    //Busca o cliente pelo CPF
     @Query("SELECT * FROM contas WHERE cpfCliente LIKE '%' || :cpfCliente || '%'")
     List<Conta> buscarPorCPF(String cpfCliente);
 
+    //Faz a cálculo de todo o saldo do banco usando a notação SUM do SQL
     @Query("SELECT SUM(saldo) FROM contas")
     LiveData<Double> saldoTotal();
 

@@ -47,7 +47,7 @@ public class ContasActivity extends AppCompatActivity {
 
 
 
-        //TODO Ainda falta implementar o código que atualiza a lista de contas automaticamente na tela
+        //Atualiza a activity para aparece as contas automaticamente na tela
         this.viewModel.contas.observe(
                 this,
                 todasContas -> {
@@ -61,6 +61,7 @@ public class ContasActivity extends AppCompatActivity {
         );
     }
 
+    //Remova uma conta e tira ela da activity
     public void removerConta(Conta conta) {
         viewModel.remover(conta);
     }

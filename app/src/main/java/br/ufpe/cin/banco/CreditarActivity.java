@@ -54,6 +54,7 @@ public class CreditarActivity extends AppCompatActivity {
             String numOrigem = numeroContaOrigem.getText().toString().trim();
             String valorStr = valorOperacao.getText().toString().trim();
 
+            //Sessão de verificações para creditar dinheiro em uma conta
             if (numOrigem.isEmpty() || valorStr.isEmpty()) {
                 tipoOperacao.setText("Preencha todos os campos!");
                 return;

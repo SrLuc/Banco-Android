@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import br.ufpe.cin.banco.R;
 
-//Ver anotações TODO no código
 public class AdicionarContaActivity extends AppCompatActivity {
 
     ContaViewModel viewModel;
@@ -49,8 +48,8 @@ public class AdicionarContaActivity extends AppCompatActivity {
                     String cpfCliente = campoCPF.getText().toString();
                     String numeroConta = campoNumero.getText().toString();
                     String saldoConta = campoSaldo.getText().toString();
-                    //TODO: Incluir validações aqui, antes de criar um objeto Conta (por exemplo, verificar que digitou um nome com pelo menos 5 caracteres, que o campo de saldo tem de fato um número, assim por diante). Se todas as validações passarem, aí sim cria a Conta conforme linha abaixo.
 
+                    //Sessão de verificações para criar uma nova conta
                     if (nomeCliente.isEmpty() || nomeCliente.length() < 5) {
                         campoNome.setError("Nome deve ter pelo menos 5 caracteres");
                         campoNome.requestFocus();
@@ -84,13 +83,12 @@ public class AdicionarContaActivity extends AppCompatActivity {
                         return;
                     }
 
-
+                    //Cria o objeto nova Conta
                     Conta c = new Conta(numeroConta, saldo, nomeCliente, cpfCliente);
-                    //TODO: chamar o método que vai salvar a conta no Banco de Dados
-                    //DONE
+
+                    //Passe esse objeto para o ViewModel
                     viewModel.inserir(c);
 
-                    // Fecha a Activity
                     finish();
 
                 }

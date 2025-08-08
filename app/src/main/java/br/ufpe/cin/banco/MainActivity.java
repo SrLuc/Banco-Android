@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Remover a linha abaixo se for implementar a parte de Clientes
+        //A parte clientes não foi implementada.
         clientes.setEnabled(false);
 
         contas.setOnClickListener(

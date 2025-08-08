@@ -26,14 +26,17 @@ public class TransacaoViewModel extends AndroidViewModel {
         this.transacoes = repository.getTransacoes();
     }
 
+    //Atualiza a UI apos inserir uma nova conta
     public void inserir(Transacao t) {
         new Thread(() -> repository.inserir(t)).start();
     }
 
+    //retorna todas as transações para a UI usando o view model
     public LiveData<List<Transacao>> getTransacoes(){
         return transacoes;
     }
 
+    //busca as transações pela data para atualizar a UI pelo view model
     public LiveData<List<Transacao>> buscarPorData(String data){
         return repository.buscarPorData(data);
     }

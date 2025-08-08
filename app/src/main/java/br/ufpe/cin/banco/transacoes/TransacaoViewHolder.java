@@ -35,6 +35,7 @@ public class TransacaoViewHolder extends RecyclerView.ViewHolder {
         NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance();
         String valorFormatado = formatoMoeda.format(t.valorTransacao);
 
+        //Sessão de verificação do tipo de transação para mostrar a cor correspondente ao tipo, aqui, adicionei as cores no arquivo colors.xml para usar no objeto R.color
         if(t.tipoTransacao == 'D'){
             valorTransacao.setText("-" + valorFormatado);
             valorTransacao.setTextColor(context.getResources().getColor(R.color.debito));

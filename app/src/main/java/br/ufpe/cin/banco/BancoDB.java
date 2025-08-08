@@ -15,7 +15,6 @@ import br.ufpe.cin.banco.conta.ContaDAO;
 import br.ufpe.cin.banco.transacoes.Transacao;
 import br.ufpe.cin.banco.transacoes.TransacaoDAO;
 
-//ESTA CLASSE NAO PRECISA SER MODIFICADA, SE NAO FOR IMPLEMENTAR A FUNCIONALIDADE DE CLIENTES!
 @Database(entities = {Conta.class, Transacao.class}, version = 1)
 public abstract class BancoDB extends RoomDatabase {
     public abstract ContaDAO contaDAO();

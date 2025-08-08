@@ -44,9 +44,11 @@ public class PesquisarActivity extends AppCompatActivity {
         rvResultado.setLayoutManager(new LinearLayoutManager(this));
         rvResultado.setAdapter(adapter);
 
+
         viewModel.contasFiltradas.observe(this, contas -> {
             adapter.submitList(contas);
         });
+
 
         viewModel.contaAtual.observe(this, conta -> {
             if (conta != null){
@@ -56,10 +58,12 @@ public class PesquisarActivity extends AppCompatActivity {
             }
         });
 
+        //Listener para pesquisar a conta criada
         btnPesquisar.setOnClickListener(
                 v -> {
                     String oQueFoiDigitado = aPesquisar.getText().toString().trim();
 
+                    //Sessão de verificação para a conta criada, pesquisa por Nome, CPF ou número da Conta
                     if (oQueFoiDigitado.isEmpty()){
                         return;
                     }
@@ -75,9 +79,5 @@ public class PesquisarActivity extends AppCompatActivity {
                     }
                 }
         );
-
-        //TODO atualizar o RecyclerView com resultados da busca na medida que encontrar
-
-
     }
 };

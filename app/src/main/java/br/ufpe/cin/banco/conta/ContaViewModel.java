@@ -26,17 +26,21 @@ public class ContaViewModel extends AndroidViewModel {
         this.contas = repository.getContas();
     }
 
+    //Passa os dados da conta para o repository
     public void inserir(Conta c) {
         new Thread(() -> repository.inserir(c)).start();
     }
 
+    //Atualiza os dados da conta para o repository
     void atualizar(Conta c) {
         new Thread(() -> repository.atualizar(c)).start();
     }
 
+    //Remove os dados da conta para o repository
     void remover(Conta c) {
         new Thread(() -> repository.remover(c)).start();
     }
+
 
     void buscarPeloNumero(String numeroConta) {
         new Thread(() -> {
@@ -44,6 +48,8 @@ public class ContaViewModel extends AndroidViewModel {
             _contaAtual.postValue(conta);
         }).start();
     }
+
+    //Esses dados passados para o repository vão interagir com o DAO que é o objeto que representa os dados do ROOM
 
 
 

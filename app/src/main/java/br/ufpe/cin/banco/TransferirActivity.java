@@ -37,7 +37,6 @@ public class TransferirActivity extends AppCompatActivity {
 
         TextView tipoOperacao = findViewById(R.id.tipoOperacao);
         EditText numeroContaOrigem = findViewById(R.id.numeroContaOrigem);
-        TextView labelContaDestino = findViewById(R.id.labelContaDestino);
         EditText numeroContaDestino = findViewById(R.id.numeroContaDestino);
         EditText valorOperacao = findViewById(R.id.valor);
         Button btnOperacao = findViewById(R.id.btnOperacao);
@@ -46,32 +45,30 @@ public class TransferirActivity extends AppCompatActivity {
         tipoOperacao.setText("TRANSFERIR");
         btnOperacao.setText("Transferir");
 
+
         btnOperacao.setOnClickListener(
                 v -> {
-
-                    //TODO lembrar de implementar validação dos números das contas e do valor da operação, antes de efetuar a operação de transferência.
-                    // O método abaixo está sendo chamado, mas precisa ser implementado na classe BancoViewModel para funcionar.
-                    // Tem que salvar a transação no Banco de Dados também, criando um objeto Transacao que será salvo na tabela transacoes por meio de TransacaoViewModel
 
                     String numOrigem = numeroContaOrigem.getText().toString().trim();
                     String numDestino = numeroContaDestino.getText().toString().trim();
                     String valorTexto = valorOperacao.getText().toString().trim();
 
+                    //Verificação para a transferencia de dinheiro de uma conta para outras
                     if (numOrigem.isEmpty() || numDestino.isEmpty() || valorTexto.isEmpty()) {
-                        // Simples validação — pode mostrar um Toast ou algo assim
                         return;
                     }
 
                     double valor = Double.parseDouble(valorTexto);
 
                     viewModel.transferir(numOrigem, numDestino, valor);
-
                     String dataHoje = java.time.LocalDate.now().toString();
 
+                    //Transação de Debito
                     transacaoViewModel.inserir(
                             new Transacao(0, 'D', numOrigem, valor, dataHoje)
                     );
 
+                    //Transação de Crédito
                     transacaoViewModel.inserir(
                             new Transacao(0, 'C', numDestino, valor, dataHoje)
                     );

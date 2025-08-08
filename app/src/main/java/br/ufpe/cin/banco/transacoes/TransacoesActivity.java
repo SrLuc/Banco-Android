@@ -52,8 +52,7 @@ public class TransacoesActivity extends AppCompatActivity {
         btnPesquisar.setOnClickListener(
                 v -> {
                     String oQueFoiDigitado = aPesquisar.getText().toString().trim();
-                    //TODO implementar o filtro de transações com o tipo de busca escolhido pelo usuário
-
+                    //Filtro de busca para buscar uma transação
                     if (oQueFoiDigitado.isEmpty()) {
                         transacaoViewModel.getTransacoes().observe(this, transacaos -> adapter.submitList(transacaos));
                         return;
@@ -72,6 +71,7 @@ public class TransacoesActivity extends AppCompatActivity {
 
                     LiveData<List<Transacao>> resultados;
 
+                    //sessão de verificações  das transações
                     if (idRadioPesquisa == R.id.pelaData) {
                         if (tipoFiltro == 'T') {
                             resultados = transacaoViewModel.buscarPorData(oQueFoiDigitado);
@@ -93,7 +93,7 @@ public class TransacoesActivity extends AppCompatActivity {
 
         );
 
-        //TODO atualizar o RecyclerView com resultados da busca na medida que encontrar
+        //Atualiza o recicleview com os resultados da busca
         transacaoViewModel.transacoes.observe(this, transacoes -> {
             adapter.submitList(transacoes);
         });

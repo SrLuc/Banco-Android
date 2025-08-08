@@ -37,8 +37,7 @@ public class ContaViewHolder  extends RecyclerView.ViewHolder {
         this.nomeCliente.setText(c.nomeCliente);
         this.infoConta.setText(c.numero + " | " + "Saldo atual: R$" + NumberFormat.getCurrencyInstance().format(c.saldo));
 
-        //TODO Falta atualizar a imagem de acordo com o valor do saldo atual
-        //DONE
+        //Atualiza a imagem de acordo com o valor do saldo
         if(c.saldo < 0){
             this.icone.setImageResource(R.drawable.delete);
         }else{
@@ -56,8 +55,7 @@ public class ContaViewHolder  extends RecyclerView.ViewHolder {
                             this.context,
                             EditarContaActivity.class
                     );
-                    //TODO Está especificando a Activity mas não está passando o número da conta pelo Intent
-                    //DONE
+                    //Passa número da conta pelo Intent usando o Put Extra
                     i.putExtra(EditarContaActivity.KEY_NUMERO_CONTA,c.numero);
                     this.context.startActivity(i);
                 }
@@ -69,10 +67,10 @@ public class ContaViewHolder  extends RecyclerView.ViewHolder {
                             "clicou no botão de deletar conta",
                             Toast.LENGTH_SHORT
                     ).show();
-                    //TODO implementar aqui a remoção da conta ao clicar!
+                    //Remova a conta ao clicar
                     if (this.context instanceof ContasActivity) {
                         ContasActivity activity = (ContasActivity) this.context;
-                        activity.removerConta(c);  // Você precisa implementar esse método na ContasActivity
+                        activity.removerConta(c);
                     } else {
                         Toast.makeText(this.context, "Erro: contexto inválido para remoção", Toast.LENGTH_SHORT).show();
                     }

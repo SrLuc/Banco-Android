@@ -62,9 +62,8 @@ public class EditarContaActivity extends AppCompatActivity {
                     String nomeCliente = campoNome.getText().toString();
                     String cpfCliente = campoCPF.getText().toString();
                     String saldoConta = campoSaldo.getText().toString();
-                    //TODO: Incluir validações aqui, antes de criar um objeto Conta. Se todas as validações passarem, aí sim monta um objeto Conta.
-                    //TODO: chamar o método que vai atualizar a conta no Banco de Dados
 
+                    //Verificações para editar uma conta depois de clicar no botão editar apos a conta ser criada
                     if(nomeCliente.isEmpty() || nomeCliente.length() <5){
                         campoNome.setError("Nome deve ter pelo menos 5 caracteres");
                         campoNome.requestFocus();
@@ -96,6 +95,7 @@ public class EditarContaActivity extends AppCompatActivity {
                 }
         );
 
+        //botão que tem a função de remover uma conta dentro do EditarContaActivity
         btnRemover.setOnClickListener(v -> {
             Conta contaAtual = viewModel.contaAtual.getValue();
             if (contaAtual != null) {

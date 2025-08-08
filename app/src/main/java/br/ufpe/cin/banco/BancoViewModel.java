@@ -19,7 +19,6 @@ import android.util.Log;
 import br.ufpe.cin.banco.transacoes.Transacao;
 import br.ufpe.cin.banco.transacoes.TransacaoRepository;
 
-//Ver anotações TODO no código
 public class BancoViewModel extends AndroidViewModel {
     private ContaRepository contaRepository;
     private TransacaoRepository transacaoRepository;
@@ -35,6 +34,7 @@ public class BancoViewModel extends AndroidViewModel {
         this.transacaoRepository = new TransacaoRepository(BancoDB.getDB(application).transacaoDAO());
     }
 
+    //Função para transferir dinheiro de uma conta para a outra
     void transferir(String numeroContaOrigem, String numeroContaDestino, double valor) {
         new Thread(() -> {
             Conta origem = contaRepository.buscarPeloNumero(numeroContaOrigem);
@@ -49,11 +49,11 @@ public class BancoViewModel extends AndroidViewModel {
 
                 String dataAtual = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-                // Transação de débito (origem)
+                // Transação de débito - origem
                 Transacao tDebito = new Transacao(0, 'D', numeroContaOrigem, valor, dataAtual);
                 transacaoRepository.inserir(tDebito);
 
-                // Transação de crédito (destino)
+                // Transação de crédito - destino
                 Transacao tCredito = new Transacao(0, 'C', numeroContaDestino, valor, dataAtual);
                 transacaoRepository.inserir(tCredito);
 
@@ -63,6 +63,7 @@ public class BancoViewModel extends AndroidViewModel {
     }
 
 
+    //Função para creditar dinheiro em um conta criada
     void creditar(String numeroConta, double valor) {
         new Thread(() -> {
             Conta conta = contaRepository.buscarPeloNumero(numeroConta);
@@ -80,6 +81,7 @@ public class BancoViewModel extends AndroidViewModel {
     }
 
 
+    //Função para debitar dinheiro de uma conta
     void debitar(String numeroConta, double valor) {
         new Thread(() -> {
             Conta conta = contaRepository.buscarPeloNumero(numeroConta);
@@ -97,22 +99,23 @@ public class BancoViewModel extends AndroidViewModel {
     }
 
 
+    //Função para buscar a conta pelo nome do cliente
     void buscarContasPeloNome(String nomeCliente) {
-        //TODO implementar busca pelo nome do Cliente
         new Thread(() -> {
             List<Conta> contas = contaRepository.buscarPeloNome(nomeCliente);
             _contasFiltradas.postValue(contas);
         }).start();
     }
 
+    //Função para buscar a conta pelo CPF
     void buscarContasPeloCPF(String cpfCliente) {
-        //TODO implementar busca pelo CPF do Cliente
         new Thread(() -> {
             List<Conta> contas = contaRepository.buscarPeloCPF(cpfCliente);
             _contasFiltradas.postValue(contas);
         }).start();
     }
 
+    //Função para buscar conta pelo número da conta
     void buscarContaPeloNumero(String numeroConta) {
         //TODO implementar busca pelo número da Conta
         new Thread(() -> {
@@ -121,18 +124,7 @@ public class BancoViewModel extends AndroidViewModel {
         }).start();
     }
 
-    void buscarTransacoesPeloNumero(String numeroConta) {
-        //TODO implementar
-    }
-
-    void buscarTransacoesPeloTipo(String tipoTransacao) {
-        //TODO implementar
-    }
-
-    void buscarTransacoesPelaData(String dataTransacao) {
-        //TODO implementar
-    }
-
+    //Função get para pegar o saldo do repository e mostrar na UI o saldo total do Banco
     public LiveData<Double> getSaldo(){
         return contaRepository.getSaldoTotal();
     }
