@@ -50,8 +50,9 @@ Aqui listo os passos do roteiro do professor que foram implementados neste proje
 
 ## Arquitetura do App & Logica da Interação entre os componentes
 
-![Estrutura do App](assets/appStructure.png)
-![Lógica de Interação](assets/logical.png)
+| Estrutura do App | Lógica de Interação |
+|------------------|---------------------|
+| <img src="assets/appStructure.png" width="300"/> | <img src="assets/logical.png" width="300"/> |
 
 
 
