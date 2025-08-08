@@ -51,7 +51,7 @@ Aqui listo os passos do roteiro do professor que foram implementados neste proje
 ## Arquitetura do App & Logica da Interação entre os componentes
 
 <div style="display: flex; gap: 20px; align-items: flex-start;">
-  <img src="Banco-Android/assets/appStructure.png" width="300"/>
+ <img src="https://raw.githubusercontent.com/SrLuc/Banco-Android/main/Banco-Android/assets/appStructure.png" width="300"/>
   <img src="Banco-Android/assets/logical.png" width="300"/>
 </div>
 
