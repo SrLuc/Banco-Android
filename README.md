@@ -55,6 +55,10 @@ Aqui listo os passos do roteiro do professor que foram implementados neste proje
   <img src="Banco-Android/assets/logical.png" width="300"/>
 </div>
 
+![Estrutura do App](Banco-Android/assets/appStructure.png)
+![Lógica de Interação](Banco-Android/assets/logical.png)
+
+
 
 ## Decisões de implementação
 Arquitetura MVVM: Mantive o padrão para separar responsabilidades.
