@@ -51,7 +51,7 @@ Aqui listo os passos do roteiro do professor que foram implementados neste proje
 ## Arquitetura do App & Logica da Interação entre os componentes
 
 ![Estrutura do App](assets/appStructure.png)
-![Lógica de Interação](Banco-Android/assets/logical.png)
+![Lógica de Interação](assets/logical.png)
 
 
 
