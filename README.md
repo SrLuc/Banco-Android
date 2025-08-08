@@ -1,109 +1,77 @@
 # Projeto Banco - Aplicativo de Gerenciamento de Contas
 
-## Visão Geral
+### Visão Geral:
 
 Este projeto é um aplicativo Android para gerenciamento de contas bancárias, utilizando arquitetura MVVM com Room para persistência local, LiveData para atualização reativa da UI, e ViewModel para separar lógica de negócios da interface.
 
----
+## Passos do roteiro concluídos
+Aqui listo os passos do roteiro do professor que foram implementados neste projeto, conforme numeração original:
 
-### Link para visualização UML do Projeto (1.2)
-- https://www.mermaidchart.com/app/projects/fb6400e6-ceb3-4048-9378-2024de20a1f3/diagrams/b22b5a86-1050-41c6-b027-3430ffd6e190/version/v0.1/edit
+1. RecyclerView na ContasActivity integrado com LiveData<List<Conta>> do ContaViewModel, exibindo as contas atualizadas.
 
-## Estrutura do Projeto
+2. ContaViewHolder modificado para atualizar a imagem do item conforme saldo.
 
-### 1. Camada de Apresentação (UI)
+3. Botão de remover conta implementado no ContaViewHolder.
 
-- **Classes:** `ContasActivity`, `EditarContaActivity`, `ContaAdapter`, `ContaViewHolder`
-- **Responsabilidades:**
-   - Exibir listas de contas em um RecyclerView.
-   - Permitir inserção, edição e remoção de contas.
-   - Navegar entre telas usando Intents.
-   - Observar dados via LiveData para atualizar a interface automaticamente.
-- **Interação:**
-   - Usa o `ContaViewModel` para obter dados e executar comandos.
+4. Validação completa na AdicionarContaActivity que verifica campos obrigatórios e formatação correta do saldo antes de criar e salvar a conta.
 
----
+5. Métodos @Update e @Delete implementados no ContaDAO para atualização e remoção de contas.
 
-### 2. Camada ViewModel
+6. Queries no ContaDAO para buscar conta por número, nome do cliente e CPF.
 
-- **Classe:** `ContaViewModel`
-- **Responsabilidades:**
-   - Atua como intermediário entre a UI e o repositório.
-   - Expor LiveData para observação pela UI.
-   - Garantir que operações no banco sejam executadas em threads separadas.
-- **Interação:**
-   - Usa o `ContaRepository` para acessar dados.
+7. ContaRepository e ContaViewModel implementados para operações de atualização, remoção e buscas, respeitando execução em thread de background com @WorkerThread.
 
----
+8. EditarContaActivity busca dados da conta via número recebido, valida formulário, atualiza ou remove a conta usando o ContaViewModel.
 
-### 3. Camada de Repositório
+9. BancoViewModel com métodos para transferir, creditar e debitar, integrando com repositórios e validando dados antes da operação.
 
-- **Classe:** `ContaRepository`
-- **Responsabilidades:**
-   - Centralizar acesso a dados.
-   - Executar operações de banco em background.
-   - Fornecer interface para CRUD e buscas.
-- **Interação:**
-   - Usa `ContaDAO` para executar consultas e comandos no banco.
+10. Validação nas Activities DebitarActivity, CreditarActivity e TransferirActivity para verificar existência das contas e valores positivos antes das operações.
 
----
+11. Implementação na PesquisarActivity para buscas pelo tipo selecionado (número, nome, CPF), atualizando o RecyclerView com resultados em tempo real.
 
-### 4. Camada DAO
+12. Na MainActivity, exibição do valor total armazenado no banco, calculado como soma de todos os saldos (considerando possíveis saldos negativos).
 
-- **Interface:** `ContaDAO`
-- **Responsabilidades:**
-   - Definir operações SQL (inserir, atualizar, deletar, consultar).
-   - Fornecer consultas específicas (por número, CPF, nome).
-- **Interação:**
-   - Usada pelo `ContaRepository`.
+13. Modificação no TransacaoViewHolder para exibir valores em vermelho no caso de transações de débito.
 
----
+14. Métodos no TransacaoDAO, TransacaoRepository e TransacaoViewModel para buscar transações por número da conta, data e tipo (crédito, débito, todas).
 
-### 5. Banco de Dados
+15. TransacoesActivity implementada para filtrar e exibir transações conforme seleção do usuário, iniciando com todas as transações listadas.
 
-- **Classe:** `BancoDB`
-- **Responsabilidades:**
-   - Representar a instância do banco SQLite via Room.
-   - Fornecer DAO para as camadas superiores.
+## Estrutura do projeto
+**Camada UI:** ContasActivity, EditarContaActivity, AdicionarContaActivity, PesquisarActivity, TransacoesActivity e seus adapters/viewholders.
 
----
+**ViewModel:** ContaViewModel, BancoViewModel, TransacaoViewModel.
 
-## Fluxo de Dados - Exemplo de Edição de Conta
+**Repositórios:** ContaRepository, TransacaoRepository.
 
-1. Usuário clica em editar conta na lista (`ContasActivity`).
-2. `ContaViewHolder` inicia `EditarContaActivity` passando o número da conta.
-3. `EditarContaActivity` pede dados ao `ContaViewModel`.
-4. `ContaViewModel` usa o `ContaRepository` para buscar a conta no banco.
-5. `ContaRepository` obtém os dados via `ContaDAO`.
-6. Os dados retornam via LiveData para `EditarContaActivity`.
-7. Usuário edita os dados e confirma.
-8. `EditarContaActivity` chama `ContaViewModel.atualizar()`.
-9. `ContaViewModel` manda atualizar no banco via `ContaRepository`.
-10. A atualização é feita em background, e a lista atualiza automaticamente.
+**DAO:** ContaDAO, TransacaoDAO.
 
----
+**Banco:** Classe BancoDB com instância do Room.
 
-## Considerações Técnicas
+## Arquitetura do App & Logica da Interação entre os componentes
 
-- Arquitetura MVVM para separação de responsabilidades.
-- Uso de LiveData e ViewModel para UI responsiva e sem travamentos.
-- Room para persistência local eficiente e segura.
-- Operações no banco sempre em threads separadas para evitar travar a UI.
-- Repositório como camada única de acesso aos dados para facilitar manutenção.
+<div style="display: flex; gap: 20px; align-items: flex-start;">
+  <img src="../Banco-Android/assets/appStructure.png" width="300"/>
+  <img src="../Banco-Android/assets/logical.png" width="300"/>
+</div>
 
----
 
-## Como Rodar
+## Decisões de implementação
+Arquitetura MVVM: Mantive o padrão para separar responsabilidades.
 
-1. Importe o projeto no Android Studio.
-2. Compile e rode no emulador ou dispositivo físico.
-3. Utilize a interface para adicionar, editar, buscar e remover contas.
+Uso de Room: O Room foi a escolha natural para persistência local.
 
----
+Threads separadas: Todas operações de banco foram feitas em threads de background para evitar bloqueio da interface, usando @WorkerThread.
 
-## Contato
+Passagem de parâmetros via Intent: Para manter a navegação fluida e o compartilhamento de dados entre telas, utilizei Intent.putExtra para o número da conta.
 
-Para dúvidas ou sugestões, abra uma issue ou contate o desenvolvedor.
+Atualização reativa da UI: O LiveData foi usado para observar as listas de contas e transações, fazendo com que o RecyclerView seja atualizado automaticamente sem necessidade de refresh manual.
 
----
+Imagens condicionais: Usei lógica simples no ContaViewHolder para alterar a imagem do item de acordo com o saldo, melhorando o feedback visual para o usuário.
+
+Filtros de busca na camada DAO: Preferi fazer as filtragens direto nas queries SQL para otimizar performance e reduzir processamento na camada UI.
+
+Reuso e organização do código: Centralizei o acesso a dados no Repository, garantindo um ponto único para operações, facilitando manutenção e possíveis melhorias futuras.
+
+Estilo UI : Utilizei as Cores do CIn para ficar com a interface semelhante a o estilo Acadêmico do Centro de Informática.
 
