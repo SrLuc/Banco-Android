@@ -59,7 +59,7 @@ Aqui listo os passos do roteiro do professor que foram implementados neste proje
 ## Decisões de implementação
 Arquitetura MVVM: Mantive o padrão para separar responsabilidades.
 
-Uso de Room: O Room foi a escolha natural para persistência local.
+Uso de Room: O Room foi a escolha para persistência local.
 
 Threads separadas: Todas operações de banco foram feitas em threads de background para evitar bloqueio da interface, usando @WorkerThread.
 
@@ -67,7 +67,7 @@ Passagem de parâmetros via Intent: Para manter a navegação fluida e o compart
 
 Atualização reativa da UI: O LiveData foi usado para observar as listas de contas e transações, fazendo com que o RecyclerView seja atualizado automaticamente sem necessidade de refresh manual.
 
-Imagens condicionais: Usei lógica simples no ContaViewHolder para alterar a imagem do item de acordo com o saldo, melhorando o feedback visual para o usuário.
+Imagens condicionais: Usei lógica simples no ContaViewHolder para alterar a imagem do item de acordo com o saldo.
 
 Filtros de busca na camada DAO: Preferi fazer as filtragens direto nas queries SQL para otimizar performance e reduzir processamento na camada UI.
 
