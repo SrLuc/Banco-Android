@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:orientation="vertical"
+    android:background="#ECECEC">
+
+    <!-- Campo para digitar o que deseja pesquisar -->
+    <EditText
+        android:id="@+id/pesquisa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:hint="Digite algum termo para pesquisar"
+        android:fontFamily="sans-serif-light"
+        android:textSize="18sp"
+        android:backgroundTint="#8B0000"
+        android:textColor="#111111"
+        android:minHeight="48dp" />
+
+    <!-- RadioGroup com todas as opções de pesquisa -->
+    <RadioGroup
+        android:id="@+id/tipoPesquisa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_gravity="center">
+
+        <RadioButton
+            android:id="@+id/peloNumeroConta"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Número da Conta"
+            android:textColor="#8B0000"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/peloNomeCliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:checked="true"
+            android:fontFamily="sans-serif-medium"
+            android:text="Nome"
+            android:textColor="#8B0000"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/peloCPFcliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="CPF"
+            android:textColor="#8B0000"
+            android:textSize="20sp" />
+    </RadioGroup>
+
+    <!-- Botão para iniciar a pesquisa -->
+    <Button
+        android:id="@+id/btn_Pesquisar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:text="Pesquisar"
+        android:textSize="24sp"
+        android:backgroundTint="#B22222"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-medium" />
+
+    <!-- RecyclerView para mostrar os resultados da pesquisa -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvResultado"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="6dp" />
+
+</LinearLayout>

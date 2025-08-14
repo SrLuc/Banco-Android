@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:orientation="vertical"
+    android:background="#ECECEC">
+
+    <EditText
+        android:id="@+id/pesquisa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:hint="Digite algum termo para pesquisar"
+        android:fontFamily="sans-serif-light"
+        android:textSize="18sp"
+        android:backgroundTint="#8B0000"
+        android:textColor="#111111"
+        android:minHeight="48dp" />
+
+    <RadioGroup
+        android:id="@+id/tipoTransacao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp">
+
+        <RadioButton
+            android:id="@+id/peloTipoCredito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:text="Crédito"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#8B0000" />
+
+        <RadioButton
+            android:id="@+id/peloTipoDebito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:text="Débito"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#8B0000" />
+
+        <RadioButton
+            android:id="@+id/peloTipoTodos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:checked="true"
+            android:text="Todas"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#8B0000" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/tipoPesquisa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp">
+
+        <RadioButton
+            android:id="@+id/pelaData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:text="Data"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#8B0000" />
+
+        <RadioButton
+            android:id="@+id/peloNumeroConta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:text="Número da Conta"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#8B0000" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_Pesquisar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:text="Pesquisar"
+        android:textSize="24sp"
+        android:backgroundTint="#B22222"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-medium" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvResultado"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="6dp" />
+
+</LinearLayout>

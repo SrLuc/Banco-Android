@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="blue">#FF0000FF</color>
+    <color name="credito">#008000</color> <!-- verde escuro -->
+    <color name="debito">#B22222</color> <!-- vermelho escuro -->
+    <color name="transacao_padrao">#000000</color> <!-- preto -->
+    <color name="primary">#6200EE</color>
+    <color name="secondary">#03DAC6</color>
+
+</resources>

@@ -1,0 +1,37 @@
+flowchart TB
+    classDef ui fill:#aaffaa,stroke:#006600,stroke-width:2px
+    classDef viewmodel fill:#aaccff,stroke:#000066,stroke-width:2px
+    classDef repository fill:#ffccaa,stroke:#663300,stroke-width:2px
+    classDef dao fill:#ffaaff,stroke:#660066,stroke-width:2px
+    classDef database fill:#ffffaa,stroke:#666600,stroke-width:2px
+
+    subgraph UI["Activity (View)"]
+        UI1["Activity / Fragment\n(Interação com Usuário)"]
+    end
+
+    subgraph VM["ViewModel"]
+        VM1["ViewModel\n(Expõe LiveData, lógica UI)"]
+    end
+
+    subgraph Repo["Repository"]
+        R1["Repository\n(Centraliza acesso a dados)"]
+    end
+
+    subgraph DAO["DAO"]
+        DAO1["DAO\n(Interface com SQLite / Room)"]
+    end
+
+    subgraph DB["Banco de Dados"]
+        DB1["Room + SQLite\n(Armazenamento físico)"]
+    end
+
+    UI1 --> VM1
+    VM1 --> R1
+    R1 --> DAO1
+    DAO1 --> DB1
+
+    class UI1 ui
+    class VM1 viewmodel
+    class R1 repository
+    class DAO1 dao
+    class DB1 database

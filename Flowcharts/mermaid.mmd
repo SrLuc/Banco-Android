@@ -1,0 +1,87 @@
+flowchart TB
+    %% Estilos
+    classDef ui fill:#aaffaa,stroke:#006600,stroke-width:2px
+    classDef viewmodel fill:#aaccff,stroke:#000066,stroke-width:2px
+    classDef repository fill:#ffccaa,stroke:#663300,stroke-width:2px
+    classDef dao fill:#ffaaff,stroke:#660066,stroke-width:2px
+    classDef database fill:#ffffaa,stroke:#666600,stroke-width:2px
+    classDef model fill:#ffaaaa,stroke:#660000,stroke-width:2px
+
+    %% Camadas MVVM
+    subgraph UI["Camada de UI (View) - Activities/Fragments"]
+        UI1["ContasActivity\n- Lista contas\n- Navega para edição/criação"]
+        UI2["EditarContaActivity\n- Edição de conta existente"]
+        UI3["AdicionarContaActivity\n- Criação de nova conta"]
+        UI4["TransacoesActivity\n- Visualiza/extrato"]
+    end
+
+    subgraph VM["Camada ViewModel"]
+        VM1["ContaViewModel\n- LiveData<List<Conta>>\n- getContas()\n- addConta()\n- updateConta()\n- deleteConta()"]
+        VM2["TransacaoViewModel\n- LiveData<List<Transacao>>\n- transferir()\n- creditar()\n- debitar()\n- getExtrato()"]
+    end
+
+    subgraph Repo["Camada Repository"]
+        R1["ContaRepository\n- getContas()\n- getContaPorId()\n- insertConta()\n- updateConta()\n- deleteConta()"]
+        R2["TransacaoRepository\n- transferir()\n- creditar()\n- debitar()\n- getTransacoesPorConta()"]
+    end
+
+    subgraph DAO["Camada DAO"]
+        DAO1["ContaDAO\n- @Query getAll()\n- @Insert insert()\n- @Update update()\n- @Delete delete()\n- buscarPor*()"]
+        DAO2["TransacaoDAO\n- @Insert insert()\n- @Query getByConta()\n- @Query getByPeriodo()"]
+    end
+
+    subgraph DB["Banco de Dados"]
+        DB1["BancoDB\n- RoomDatabase\n- Entities: Conta, Transacao"]
+    end
+
+    subgraph Model["Modelos/Entidades"]
+        M1["Conta\n- numeroConta\n- cpfTitular\n- nomeTitular\n- saldo\n- etc."]
+        M2["Transacao\n- id\n- contaOrigem\n- contaDestino\n- valor\n- data\n- tipo"]
+    end
+
+    %% Fluxos de Dados
+    %% UI → ViewModel
+    UI1 -->|observa| VM1
+    UI2 -->|observa| VM1
+    UI3 -->|observa| VM1
+    UI4 -->|observa| VM2
+    
+    %% ViewModel → Repository
+    VM1 --> R1
+    VM2 --> R1
+    VM2 --> R2
+    
+    %% Repository → DAO
+    R1 --> DAO1
+    R2 --> DAO1
+    R2 --> DAO2
+           
+    %% DAO → Database
+    DAO1 --> DB1
+    DAO2 --> DB1
+    
+    %% Database ↔ Entidades
+    DB1 --> M1
+    DB1 --> M2
+
+    %% Estilização por camadas
+    class UI ui
+    class VM viewmodel
+    class Repo repository
+    class DAO dao
+    class DB database
+    class Model model
+
+    %% Legenda
+    subgraph Legenda["Legenda de Camadas"]
+        direction LR
+        L1[UI]:::ui
+        L2[ViewModel]:::viewmodel
+        L3[Repository]:::repository
+        L4[DAO]:::dao
+        L5[Banco de Dados]:::database
+        L6[Modelos]:::model
+    end  
+
+    
+

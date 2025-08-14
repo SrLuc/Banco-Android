@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:orientation="vertical"
+    android:background="#ECECEC">
+
+    <!-- Cabeçalho -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="24dp">
+
+        <ImageView
+            android:id="@+id/imgLogoLeft"
+            android:layout_width="208dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="6dp"
+            android:contentDescription="Logo esquerda"
+            android:src="@drawable/ufpe" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cin UFPE Bank"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:textColor="#8B0000"
+            android:fontFamily="sans-serif-medium"
+            android:layout_weight="1"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnContas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Contas"
+        android:layout_margin="6dp"
+        android:textSize="24sp"
+        android:backgroundTint="#8B0000"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-medium" />
+
+    <Button
+        android:id="@+id/btnTransferir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Transferir"
+        android:layout_margin="6dp"
+        android:textSize="24sp"
+        android:backgroundTint="#8B0000"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-medium" />
+
+    <Button
+        android:id="@+id/btnDebitar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Debitar"
+        android:layout_margin="6dp"
+        android:textSize="24sp"
+        android:backgroundTint="#8B0000"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-medium" />
+
+    <Button
+        android:id="@+id/btnCreditar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Creditar"
+        android:layout_margin="6dp"
+        android:textSize="24sp"
+        android:backgroundTint="#8B0000"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-medium" />
+
+    <Button
+        android:id="@+id/btnPesquisar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pesquisar"
+        android:layout_margin="6dp"
+        android:textSize="24sp"
+        android:backgroundTint="#B22222"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-medium" />
+
+    <Button
+        android:id="@+id/btnTransacoes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Transacoes"
+        android:layout_margin="6dp"
+        android:textSize="24sp"
+        android:backgroundTint="#B22222"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-medium" />
+
+    <Button
+        android:id="@+id/btnClientes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clientes"
+        android:layout_margin="6dp"
+        android:textSize="24sp"
+        android:backgroundTint="#a8a7a7"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-medium" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Total no Banco:"
+        android:textSize="26sp"
+        android:textColor="#333333"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/totalDinheiroBanco"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textColor="#111111" />
+
+</LinearLayout>
