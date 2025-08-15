@@ -1,6 +1,6 @@
 # Projeto Banco - Aplicativo de Gerenciamento de Contas
 
-### Visão Geral:
+### Visão Geral do Projeto:
 
 Este projeto é um aplicativo Android para gerenciamento de contas bancárias, utilizando arquitetura MVVM com Room para persistência local, LiveData para atualização reativa da UI, e ViewModel para separar lógica de negócios da interface.
 
