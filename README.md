@@ -4,38 +4,81 @@
 
 Este projeto é um aplicativo Android para gerenciamento de contas bancárias, utilizando arquitetura MVVM com Room para persistência local, LiveData para atualização reativa da UI, e ViewModel para separar lógica de negócios da interface.
 
-## Passos do roteiro concluídos
-Aqui listo os passos do roteiro do professor que foram implementados neste projeto, conforme numeração original:
+## Passos do roteiro Aqui listo os passos do roteiro do professor que foram implementados. Estes 15 Passos cobrem os 20 passos da atividade:
 
-1. RecyclerView na ContasActivity integrado com LiveData<List<Conta>> do ContaViewModel, exibindo as contas atualizadas.
+Passos Completados
 
-2. ContaViewHolder modificado para atualizar a imagem do item conforme saldo.
+1. RecyclerView na ContasActivity integrado ao LiveData
 
-3. Botão de remover conta implementado no ContaViewHolder.
+O RecyclerView foi configurado para usar a lista de contas proveniente do ContaViewModel (com LiveData<List<Conta>>). Essa decisão garante atualização em tempo real sempre que houver modificações no banco de dados.
 
-4. Validação completa na AdicionarContaActivity que verifica campos obrigatórios e formatação correta do saldo antes de criar e salvar a conta.
+2. Atualização de imagem no ContaViewHolder
 
-5. Métodos @Update e @Delete implementados no ContaDAO para atualização e remoção de contas.
+O ícone exibido em cada item da lista foi vinculado ao saldo da conta: se negativo, aparece um ícone de alerta; se positivo, um ícone de confirmação. Essa escolha facilita a identificação rápida da situação da conta.
 
-6. Queries no ContaDAO para buscar conta por número, nome do cliente e CPF.
+3. Remoção de contas pelo ContaViewHolder
 
-7. ContaRepository e ContaViewModel implementados para operações de atualização, remoção e buscas, respeitando execução em thread de background com @WorkerThread.
+Foi incluído um botão de remoção diretamente no item da lista, que aciona o método correspondente no ContaViewModel. A remoção é imediata e refletida na tela.
 
-8. EditarContaActivity busca dados da conta via número recebido, valida formulário, atualiza ou remove a conta usando o ContaViewModel.
+4. Intent para EditarContaActivity com número da conta
 
-9. BancoViewModel com métodos para transferir, creditar e debitar, integrando com repositórios e validando dados antes da operação.
+Foi implementado o envio do número da conta pelo Intent ao abrir a EditarContaActivity. Dessa forma, a tela de edição consegue identificar e carregar a conta correta para atualização ou exclusão.
 
-10. Validação nas Activities DebitarActivity, CreditarActivity e TransferirActivity para verificar existência das contas e valores positivos antes das operações.
+5. Validação ao adicionar conta
 
-11. Implementação na PesquisarActivity para buscas pelo tipo selecionado (número, nome, CPF), atualizando o RecyclerView com resultados em tempo real.
+Na AdicionarContaActivity, foi implementada uma validação completa dos dados do formulário (campos obrigatórios e saldo numérico válido). Isso evita registros inconsistentes no banco.
 
-12. Na MainActivity, exibição do valor total armazenado no banco, calculado como soma de todos os saldos (considerando possíveis saldos negativos).
+6. Métodos de atualização e remoção no DAO
 
-13. Modificação no TransacaoViewHolder para exibir valores em vermelho no caso de transações de débito.
+O ContaDAO recebeu os métodos @Update e @Delete, permitindo alterações e exclusões de registros de forma centralizada.
 
-14. Métodos no TransacaoDAO, TransacaoRepository e TransacaoViewModel para buscar transações por número da conta, data e tipo (crédito, débito, todas).
+7. Consultas personalizadas no DAO
 
-15. TransacoesActivity implementada para filtrar e exibir transações conforme seleção do usuário, iniciando com todas as transações listadas.
+Foram criadas queries específicas para buscar contas por número, nome ou CPF, ampliando a flexibilidade das pesquisas.
+
+8. Repository e ViewModel para operações e buscas
+
+O ContaRepository e o ContaViewModel foram expandidos para dar suporte a atualização, remoção e buscas. As operações foram implementadas em background threads, seguindo boas práticas de Android.
+
+9. Edição de contas
+
+Na EditarContaActivity, o número da conta recebido pelo Intent é usado para buscar os dados no banco. Foi incluída validação de formulário e opções para atualizar ou remover a conta. Essa Activity garante consistência semelhante à tela de adição.
+
+10. BancoViewModel com operações financeiras
+
+O BancoViewModel concentra as operações de crédito, débito e transferência. Decidiu-se centralizar a lógica aqui para manter a separação entre regras de negócio e interface gráfica.
+
+11. Validação nas operações de débito, crédito e transferência
+
+Nas respectivas Activities, implementamos validações para confirmar existência das contas e valores positivos. Essa decisão evita operações inválidas ou inconsistentes.
+
+12. Registro de transações após operações
+
+Cada operação (débito, crédito e transferência) gera uma transação no banco. Na transferência, são registradas duas transações: uma de débito e outra de crédito. Isso garante rastreabilidade completa das movimentações.
+
+13. Pesquisa de contas por diferentes critérios
+
+Na PesquisarActivity, foi implementado um sistema de pesquisa que permite buscar por número, nome ou CPF, com atualização dinâmica do RecyclerView. A escolha de atualizar em tempo real melhora a experiência do usuário.
+
+14. Valor total exibido na MainActivity
+
+A tela principal exibe o valor total disponível no banco, calculado como soma dos saldos. Consideramos saldos negativos, fornecendo uma visão realista da situação geral.
+
+15. Cores em transações de débito
+
+No TransacaoViewHolder, os valores de transações de débito são destacados em vermelho, melhorando a clareza visual do histórico.
+
+16. Consultas de transações
+
+No TransacaoDAO, TransacaoRepository e TransacaoViewModel, foram criados métodos de busca por número da conta, por data e por tipo (crédito, débito ou todas). Isso oferece flexibilidade no histórico.
+
+17. Tela de histórico de transações
+
+A TransacoesActivity exibe todas as transações inicialmente e permite filtrar de acordo com o critério desejado. Essa escolha facilita o acompanhamento do movimento financeiro.
+
+18. Integração entre BancoViewModel e TransacaoViewModel
+
+As operações financeiras do BancoViewModel agora estão integradas ao TransacaoViewModel, garantindo que toda movimentação gere uma transação registrada automaticamente.
 
 ## Estrutura do projeto
 **Camada UI:** ContasActivity, EditarContaActivity, AdicionarContaActivity, PesquisarActivity, TransacoesActivity e seus adapters/viewholders.
